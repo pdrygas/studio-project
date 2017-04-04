@@ -9,7 +9,9 @@
   },
   "permissions": [
     "contextMenus",
-    "tabs"
+    "tabs",
+    "cookies",
+    "http://localhost:8080/*"
   ],
   "background": {
     "scripts": ["background.js"]
