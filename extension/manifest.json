@@ -8,7 +8,9 @@
     "default_popup": "login.html"
   },
   "permissions": [
-    "contextMenus"
+    "contextMenus",
+    "cookies",
+    "http://localhost:8080/*"
   ],
   "background": {
     "scripts": ["background.js"]
