@@ -1,9 +1,11 @@
-
 chrome.contextMenus.create({
     title: "Send",
-    contexts:["selection"],
-    onclick: sendContent,
+    contexts:["selection","image"],
+    onclick: fireContentTransport
 });
 
-function sendContent() {
+function fireContentTransport() {
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        chrome.tabs.sendMessage(tabs[0].id, {command: "send"});
+    });
 }
