@@ -1,4 +1,4 @@
-package pl.edu.agh.security;
+package pl.edu.agh.security.filter;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
