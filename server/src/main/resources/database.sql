@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS resources CASCADE;
 
 BEGIN;
 
@@ -8,6 +9,12 @@ CREATE TABLE users(
 	username VARCHAR(40) UNIQUE NOT NULL,
 	password VARCHAR(64) NOT NULL,
 	token VARCHAR(32) NOT NULL
+);
+CREATE TABLE resources(
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER NOT NULL REFERENCES users(id),
+  title VARCHAR(40),
+  content TEXT NOT NULL
 );
 
 COMMIT;
