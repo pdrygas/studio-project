@@ -31,19 +31,18 @@ public class Application {
             @Override
             public void afterPropertiesSet() throws Exception {
                 User user = new User();
-                user.setId(0);
                 user.setUsername("user");
                 user.setPassword(hashPassword("user"));
                 user.setToken("secret_token");
 
                 try {
+                    resourceRepo.deleteAll();
                     userRepo.deleteAll();
+
                     userRepo.save(user);
                 } catch(Exception e) {
                     e.printStackTrace();
                 }
-
-                resourceRepo.deleteAll();
 
                 Resource resource = new Resource();
                 resource.setUser(user);

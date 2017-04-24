@@ -1,5 +1,8 @@
 package pl.edu.agh.model;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import java.util.Optional;
 
@@ -11,6 +14,7 @@ public class Resource {
     private int id;
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
     private String title;
     private String content;
