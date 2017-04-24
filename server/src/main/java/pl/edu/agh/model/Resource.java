@@ -1,17 +1,18 @@
 package pl.edu.agh.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Optional;
 
 @Entity
 @Table(name = "resources")
 public class Resource {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private int userId;
-    private Optional<String> title;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+    private String title;
     private String content;
 
     public int getId() {
@@ -22,19 +23,19 @@ public class Resource {
         this.id = id;
     }
 
-    public int getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public Optional<String> getTitle() {
-        return title;
+    public Optional getTitle() {
+        return Optional.ofNullable(title);
     }
 
-    public void setTitle(Optional<String> title) {
+    public void setTitle(String title) {
         this.title = title;
     }
 

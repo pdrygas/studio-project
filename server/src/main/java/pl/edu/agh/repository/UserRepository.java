@@ -6,4 +6,5 @@ import pl.edu.agh.model.User;
 public interface UserRepository extends JpaRepository<User, Long> {
     User findByToken(String token);
     User findByUsername(String username);
+    void deleteAll();
 }
