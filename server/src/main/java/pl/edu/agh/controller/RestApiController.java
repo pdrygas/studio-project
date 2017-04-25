@@ -10,6 +10,7 @@ import pl.edu.agh.model.User;
 import pl.edu.agh.repository.ResourceRepository;
 import pl.edu.agh.repository.UserRepository;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -33,10 +34,20 @@ public class RestApiController {
         return resourcesToJson(resources);
     }
 
+    @RequestMapping(method = RequestMethod.POST, value = "/resources")
+    public String addResource(@RequestHeader(AUTH_HEADER_NAME) String token, HttpServletRequest request) {
+        User user = userRepo.findByToken(token);
+
+        if(saveResource(user, request.getParameter("title"), request.getParameter("content"))) {
+            return "{\"result\": \"ok\"}";
+        }
+        return "{\"result\": \"error\"}";
+    }
+
     private String resourcesToJson(List<Resource> resources) {
         JSONArray result = new JSONArray();
 
-        resources.stream().forEach(resource -> {
+        resources.forEach(resource -> {
             JSONObject object = new JSONObject();
             try {
                 object.put("id", resource.getId());
@@ -49,5 +60,19 @@ public class RestApiController {
         });
 
         return result.toString();
+    }
+
+    private boolean saveResource(User user, String title, String content) {
+        Resource resource = new Resource();
+        resource.setUser(user);
+        resource.setTitle(title);
+        resource.setContent(content);
+
+        try {
+            resourceRepo.save(resource);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 }

@@ -4,7 +4,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
-import java.util.Optional;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "resources")
@@ -17,6 +17,7 @@ public class Resource {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
     private String title;
+    @NotNull
     private String content;
 
     public int getId() {
