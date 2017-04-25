@@ -35,8 +35,8 @@ public class Resource {
         this.user = user;
     }
 
-    public Optional getTitle() {
-        return Optional.ofNullable(title);
+    public String getTitle() {
+        return title;
     }
 
     public void setTitle(String title) {
