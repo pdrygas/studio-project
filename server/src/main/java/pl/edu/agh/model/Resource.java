@@ -5,6 +5,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "resources")
@@ -18,6 +19,7 @@ public class Resource {
     private User user;
     private String title;
     @NotNull
+    @Size(min = 1)
     private String content;
 
     public int getId() {

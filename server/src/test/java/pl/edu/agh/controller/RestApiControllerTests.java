@@ -31,39 +31,46 @@ public class RestApiControllerTests {
 
     @Test
     public void missingTokenCauses500Error() throws Exception {
-        JSONObject result = new JSONObject(request("/test", HttpMethod.POST, null));
+        JSONObject result = new JSONObject(request("/api/test", HttpMethod.POST, null));
         Assert.assertEquals(500, result.get("status"));
     }
 
     @Test
     public void wrongTokenCauses500Error() throws Exception {
-        JSONObject result = new JSONObject(request("/test", HttpMethod.POST, requestEntity(null, USER_TOKEN + "wrong")));
+        JSONObject result = new JSONObject(request("/api/test", HttpMethod.POST, requestEntity(null, USER_TOKEN + "wrong")));
         Assert.assertEquals(500, result.get("status"));
     }
 
     @Test
     public void goodToken() {
-        String result = request("/test", HttpMethod.POST, requestEntity(null, USER_TOKEN));
+        String result = request("/api/test", HttpMethod.POST, requestEntity(null, USER_TOKEN));
         Assert.assertEquals("workin biatch!", result);
     }
 
     @Test
     public void defaultUserHas2Resources() throws Exception {
-        JSONArray result = new JSONArray(request("/resources", HttpMethod.GET, requestEntity(null, USER_TOKEN)));
+        JSONArray result = new JSONArray(request("/api/resources", HttpMethod.GET, requestEntity(null, USER_TOKEN)));
         Assert.assertEquals(2, result.length());
     }
 
     @Test
     public void otherUserHas1Resource() throws Exception {
-        JSONArray result = new JSONArray(request("/resources", HttpMethod.GET, requestEntity(null, USER2_TOKEN)));
+        JSONArray result = new JSONArray(request("/api/resources", HttpMethod.GET, requestEntity(null, USER2_TOKEN)));
         Assert.assertEquals(1, result.length());
     }
 
     @Test
     public void addNewResource() throws Exception {
-        JSONObject result = new JSONObject(request("/resources", HttpMethod.POST,
+        JSONObject result = new JSONObject(request("/api/resources", HttpMethod.POST,
                                            requestEntity(resourceParams("some title", "some content"), USER3_TOKEN)));
         Assert.assertEquals("ok", result.get("result"));
+    }
+
+    @Test
+    public void addNewResourceWithEmptyContent() throws Exception {
+        JSONObject result = new JSONObject(request("/api/resources", HttpMethod.POST,
+                                           requestEntity(resourceParams("some title", ""), USER3_TOKEN)));
+        Assert.assertEquals("error", result.get("result"));
     }
 
     private String request(String url, HttpMethod method, HttpEntity entity) {

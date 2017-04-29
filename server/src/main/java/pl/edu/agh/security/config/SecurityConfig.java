@@ -34,7 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
             .authorizeRequests()
             .antMatchers("/login").permitAll()
-            .antMatchers("/test").hasRole("USER").and()
+            .antMatchers("/api/*").hasRole("USER").and()
             .addFilterBefore(new LoginFilter("/login", tokenAuth, userDetailsService, authenticationManager()), UsernamePasswordAuthenticationFilter.class)
             .addFilterBefore(new AuthenticationFilter(tokenAuth), UsernamePasswordAuthenticationFilter.class);
     }
