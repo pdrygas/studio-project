@@ -45,6 +45,16 @@ public class RestApiController {
         return "{\"result\": \"error\"}";
     }
 
+    @RequestMapping(method = RequestMethod.DELETE, value = "/resources/{id}")
+    public String deleteResource(@RequestHeader(AUTH_HEADER_NAME) String token, @PathVariable("id") Integer id) {
+        User user = userRepo.findByToken(token);
+
+        if(resourceRepo.deleteByIdAndUserId(id, user.getId()) > 0) {
+            return "{\"result\": \"ok\"}";
+        }
+        return "{\"result\": \"error\"}";
+    }
+
     private String resourcesToJson(List<Resource> resources) {
         JSONArray result = new JSONArray();
 
