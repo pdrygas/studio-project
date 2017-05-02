@@ -8,6 +8,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -37,6 +38,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/*").hasRole("USER").and()
             .addFilterBefore(new LoginFilter("/login", tokenAuth, userDetailsService, authenticationManager()), UsernamePasswordAuthenticationFilter.class)
             .addFilterBefore(new AuthenticationFilter(tokenAuth), UsernamePasswordAuthenticationFilter.class);
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/resources");
     }
 
     @Override
