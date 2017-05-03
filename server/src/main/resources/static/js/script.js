@@ -10,7 +10,7 @@ app.controller('ResourcesController', function($scope, $http) {
    getResources();
 });
 
-app.controller('LoginController', function($scope, $http, $cookieStore, $window) {
+app.controller('LoginController', function($scope, $http, $cookies, $window) {
     $scope.login = function() {
         $http({
             method: 'POST',
@@ -18,11 +18,17 @@ app.controller('LoginController', function($scope, $http, $cookieStore, $window)
             data: $.param({username: angular.element('#username').val(), password: angular.element('#password').val()}),
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }).then(function(response) {
-            $cookieStore.put('X-AUTH-TOKEN', response.headers('X-AUTH-TOKEN'));
+            setTokenCookie(response.headers('X-AUTH-TOKEN'));
             $window.location.href = '/resources';
         }, function() {
             angular.element('#login-error').show();
         });
+    };
+
+    var setTokenCookie = function(token) {
+        var expireDate = new Date();
+        expireDate.setDate(expireDate.getDate() + 365)
+        $cookies.put('X-AUTH-TOKEN', token, {expires: expireDate});
     };
 
     angular.element('#login-error').hide();
