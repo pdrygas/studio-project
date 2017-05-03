@@ -39,6 +39,9 @@ app.controller('LoginController', function($scope, $http, $cookies, $window) {
         $cookies.put('X-AUTH-TOKEN', token, {expires: expireDate});
     };
 
+    if($cookies.get('X-AUTH-TOKEN') != undefined) {
+        $window.location.href = '/resources';
+    }
     angular.element('#login-error').hide();
 });
 
