@@ -1,4 +1,4 @@
-var app = angular.module('app', []);
+var app = angular.module('app', ['ngCookies']);
 
 app.controller('ResourcesController', function($scope, $http) {
    var getResources = function () {
@@ -8,4 +8,22 @@ app.controller('ResourcesController', function($scope, $http) {
    };
 
    getResources();
+});
+
+app.controller('LoginController', function($scope, $http, $cookieStore, $window) {
+    $scope.login = function() {
+        $http({
+            method: 'POST',
+            url: '/login',
+            data: $.param({username: angular.element('#username').val(), password: angular.element('#password').val()}),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        }).then(function(response) {
+            $cookieStore.put('X-AUTH-TOKEN', response.headers('X-AUTH-TOKEN'));
+            $window.location.href = '/resources';
+        }, function() {
+            angular.element('#login-error').show();
+        });
+    };
+
+    angular.element('#login-error').hide();
 });

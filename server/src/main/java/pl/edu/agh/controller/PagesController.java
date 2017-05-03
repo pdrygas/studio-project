@@ -10,4 +10,9 @@ public class PagesController {
     public String resources() {
         return "resources";
     }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/")
+    public String login() {
+        return "index";
+    }
 }

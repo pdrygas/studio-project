@@ -11,16 +11,20 @@
         <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="../static/css/bootstrap.min.css" />
         <link rel="stylesheet" th:href="@{/css/bootstrap-theme.min.css}" href="../static/css/bootstrap-theme.min.css" />
     </head>
-    <body data-ng-controller="ResourcesController">
+    <body data-ng-controller="LoginController">
         <div class="container">
-            <table class="table table-striped">
-                <tr ng-repeat="resource in resources">
-                    <td>
-                        <b>{{ resource.title }}</b><br />
-                        {{ resource.content.substr(0, 20) }}...
-                    </td>
-                </tr>
-            </table>
+            <form>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="username" placeholder="Username" />
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" id="password" placeholder="Password" />
+                </div>
+                <div id="login-error" class="form-group has-error">
+                    <span class="help-block">Wrong username/password!</span>
+                </div>
+                <button id="test" type="button" class="btn btn-default" ng-click="login()">Login</button>
+            </form>
         </div>
     </body>
 </html>
