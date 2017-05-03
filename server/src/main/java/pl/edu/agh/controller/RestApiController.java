@@ -32,7 +32,7 @@ public class RestApiController {
         User user = userRepo.findByToken(token);
         List<Resource> resources = resourceRepo.findAllByUserId(user.getId());
 
-        return resourcesToJson(resources);
+        return resourcesToJson(resources).toString();
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/resources")
@@ -48,29 +48,35 @@ public class RestApiController {
     @RequestMapping(method = RequestMethod.DELETE, value = "/resources/{id}")
     public String deleteResource(@RequestHeader(AUTH_HEADER_NAME) String token, @PathVariable("id") Integer id) {
         User user = userRepo.findByToken(token);
-
         if(resourceRepo.deleteByIdAndUserId(id, user.getId()) > 0) {
             return "{\"result\": \"ok\"}";
         }
         return "{\"result\": \"error\"}";
     }
 
-    private String resourcesToJson(List<Resource> resources) {
+    @RequestMapping(method = RequestMethod.GET, value = "/resources/{id}")
+    public String resource(@RequestHeader(AUTH_HEADER_NAME) String token, @PathVariable("id") Integer id) {
+        User user = userRepo.findByToken(token);
+        Resource resource = resourceRepo.findByIdAndUser(id, user);
+        return resourceToJson(resource).toString();
+    }
+
+    private JSONArray resourcesToJson(List<Resource> resources) {
         JSONArray result = new JSONArray();
+        resources.forEach(resource -> result.put(resourceToJson(resource)));
+        return result;
+    }
 
-        resources.forEach(resource -> {
-            JSONObject object = new JSONObject();
-            try {
-                object.put("id", resource.getId());
-                object.put("title", resource.getTitle());
-                object.put("content", resource.getContent());
-                result.put(object);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        });
-
-        return result.toString();
+    private JSONObject resourceToJson(Resource resource) {
+        JSONObject object = new JSONObject();
+        try {
+            object.put("id", resource.getId());
+            object.put("title", resource.getTitle());
+            object.put("content", resource.getContent());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return object;
     }
 
     private boolean saveResource(User user, String title, String content) {

@@ -10,13 +10,9 @@ app.controller('ResourcesController', function($scope, $http, $cookies) {
     };
 
     var getResources = function() {
-        $http.get('/api/resources', headers()).then(function(response) {
+        $http.get('/api/resources', headers($cookies)).then(function(response) {
             $scope.resources = response.data;
         });
-    };
-
-    var headers = function() {
-        return {headers: {'X-AUTH-TOKEN': $cookies.get('X-AUTH-TOKEN')}};
     };
 
     getResources();
@@ -45,3 +41,14 @@ app.controller('LoginController', function($scope, $http, $cookies, $window) {
 
     angular.element('#login-error').hide();
 });
+
+app.controller('ResourceController', function($scope, $http, $cookies, $location) {
+    var id = parseInt($location.absUrl().split('/').pop());
+    $http.get('/api/resources/' + id, headers($cookies)).then(function(response) {
+        $scope.resource = response.data;
+    });
+});
+
+var headers = function(cookies) {
+    return {headers: {'X-AUTH-TOKEN': cookies.get('X-AUTH-TOKEN')}};
+};
