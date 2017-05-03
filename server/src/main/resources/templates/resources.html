@@ -9,6 +9,9 @@
                         <b>{{ resource.title }}</b><br />
                         {{ resource.content.substr(0, 20) }}...
                     </td>
+                    <td>
+                        <button ng-click="deleteResource(resource.id, $index)"><span class="glyphicon glyphicon-remove"></span></button>
+                    </td>
                 </tr>
             </table>
         </div>

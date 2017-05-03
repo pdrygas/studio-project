@@ -1,13 +1,25 @@
 var app = angular.module('app', ['ngCookies']);
 
-app.controller('ResourcesController', function($scope, $http) {
-   var getResources = function () {
-       $http.get('/api/resources', {headers: {'X-AUTH-TOKEN': 'secret_token'}}).then(function(response) {
-           $scope.resources = response.data;
-       });
-   };
+app.controller('ResourcesController', function($scope, $http, $cookies) {
+    $scope.deleteResource = function(id, index) {
+        $http.delete('/api/resources/' + id, headers()).then(function(response) {
+            if(response.data.result =='ok') {
+               $scope.resources.splice(index,  1);
+            }
+        });
+    };
 
-   getResources();
+    var getResources = function() {
+        $http.get('/api/resources', headers()).then(function(response) {
+            $scope.resources = response.data;
+        });
+    };
+
+    var headers = function() {
+        return {headers: {'X-AUTH-TOKEN': $cookies.get('X-AUTH-TOKEN')}};
+    };
+
+    getResources();
 });
 
 app.controller('LoginController', function($scope, $http, $cookies, $window) {
