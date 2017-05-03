@@ -11,13 +11,15 @@
         <link rel="stylesheet" th:href="@{/css/bootstrap-theme.min.css}" href="../static/css/bootstrap-theme.min.css" />
     </head>
     <body data-ng-controller="ResourcesController">
-        <table class="table table-striped">
-            <tr ng-repeat="resource in resources">
-                <td>
-                    <b>{{ resource.title }}</b><br />
-                    {{ resource.content }}
-                </td>
-            </tr>
-        </table>
+        <div class="container">
+            <table class="table table-striped">
+                <tr ng-repeat="resource in resources">
+                    <td>
+                        <b>{{ resource.title }}</b><br />
+                        {{ resource.content.substr(0, 20) }}...
+                    </td>
+                </tr>
+            </table>
+        </div>
     </body>
 </html>
