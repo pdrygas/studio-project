@@ -3,7 +3,7 @@ var app = angular.module('app', ['ngCookies']);
 app.controller('ResourcesController', function($scope, $http, $cookies) {
     $scope.deleteResource = function(id, index) {
         $http.delete('/api/resources/' + id, headers()).then(function(response) {
-            if(response.data.result =='ok') {
+            if(response.data.result == 'ok') {
                $scope.resources.splice(index,  1);
             }
         });
@@ -50,6 +50,13 @@ app.controller('ResourceController', function($scope, $http, $cookies, $location
     $http.get('/api/resources/' + id, headers($cookies)).then(function(response) {
         $scope.resource = response.data;
     });
+});
+
+app.controller('NavbarController', function($scope, $cookies, $window) {
+    $scope.logout = function() {
+        $cookies.remove('X-AUTH-TOKEN', {path: '/'});
+        $window.location.href = '/';
+    };
 });
 
 var headers = function(cookies) {

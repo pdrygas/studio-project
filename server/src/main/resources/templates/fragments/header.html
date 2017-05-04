@@ -1,9 +1,12 @@
 <div th:fragment="header">
     <nav class="navbar navbar-inverse navbar-static-top">
-        <div class="container">
+        <div class="container-fluid">
             <ul class="nav navbar-nav">
                 <li><a href="/resources">Resources</a></li>
                 <li><a href="/categories">Categories</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#" ng-click="logout()">Logout</a></li>
             </ul>
         </div>
     </nav>
