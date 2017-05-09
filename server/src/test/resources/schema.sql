@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS categories CASCADE;
 DROP TABLE IF EXISTS resources CASCADE;
 
 BEGIN;
@@ -10,11 +11,17 @@ CREATE TABLE users(
 	password VARCHAR(64) NOT NULL,
 	token VARCHAR(32) NOT NULL
 );
+CREATE TABLE categories(
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER NOT NULL REFERENCES users(id),
+  title VARCHAR(40) NOT NULL
+);
 CREATE TABLE resources(
   id SERIAL PRIMARY KEY,
   user_id INTEGER NOT NULL REFERENCES users(id),
   title VARCHAR(40),
-  content TEXT NOT NULL
+  content TEXT NOT NULL,
+  category_id INTEGER REFERENCES categories(id)
 );
 
 COMMIT;
