@@ -59,6 +59,17 @@ app.controller('NavbarController', function($scope, $cookies, $window) {
     };
 });
 
+app.controller('CategoriesController', function($scope, $http, $cookies) {
+    var getCategories = function() {
+        $http.get('/api/categories', headers($cookies)).then(function(response) {
+            $scope.categories = response.data;
+        });
+    };
+
+    getCategories();
+});
+
+
 var headers = function(cookies) {
     return {headers: {'X-AUTH-TOKEN': cookies.get('X-AUTH-TOKEN')}};
 };

@@ -5,8 +5,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import pl.edu.agh.model.Category;
 import pl.edu.agh.model.Resource;
 import pl.edu.agh.model.User;
+import pl.edu.agh.repository.CategoryRepository;
 import pl.edu.agh.repository.ResourceRepository;
 import pl.edu.agh.repository.UserRepository;
 
@@ -20,6 +22,8 @@ public class RestApiController {
     private UserRepository userRepo;
     @Autowired
     private ResourceRepository resourceRepo;
+    @Autowired
+    private CategoryRepository categoryRepo;
     private final String AUTH_HEADER_NAME = "X-AUTH-TOKEN";
 
     @RequestMapping(method = RequestMethod.POST, value = "/test")
@@ -61,6 +65,13 @@ public class RestApiController {
         return resourceToJson(resource).toString();
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/categories")
+    public String getCategories(@RequestHeader(AUTH_HEADER_NAME) String token) {
+        User user = userRepo.findByToken(token);
+        List<Category> categories = categoryRepo.findByUser(user);
+        return categoriesToJson(categories).toString();
+    }
+
     private JSONArray resourcesToJson(List<Resource> resources) {
         JSONArray result = new JSONArray();
         resources.forEach(resource -> result.put(resourceToJson(resource)));
@@ -91,5 +102,22 @@ public class RestApiController {
             return false;
         }
         return true;
+    }
+
+    private JSONArray categoriesToJson(List<Category> categories) {
+        JSONArray result = new JSONArray();
+        categories.forEach(category -> result.put(categoryToJson(category)));
+        return result;
+    }
+
+    private JSONObject categoryToJson(Category category) {
+        JSONObject object = new JSONObject();
+        try {
+            object.put("id", category.getId());
+            object.put("title", category.getTitle());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return object;
     }
 }

@@ -21,4 +21,9 @@ public class PagesController {
     public String login() {
         return "index";
     }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/categories")
+    public String categories() {
+        return "categories";
+    }
 }
