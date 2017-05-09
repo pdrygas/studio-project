@@ -26,4 +26,9 @@ public class PagesController {
     public String categories() {
         return "categories";
     }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/categories/{id}")
+    public String category(@PathVariable Integer id) {
+        return "category";
+    }
 }

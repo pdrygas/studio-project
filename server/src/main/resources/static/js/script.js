@@ -69,6 +69,15 @@ app.controller('CategoriesController', function($scope, $http, $cookies) {
     getCategories();
 });
 
+app.controller('CategoryController', function($scope, $http, $cookies, $location) {
+    var id = parseInt($location.absUrl().split('/').pop());
+    $http.get('/api/categories/' + id, headers($cookies)).then(function(response) {
+        $scope.category = response.data;
+    });
+    $http.get('/api/categories/' + id + '/resources', headers($cookies)).then(function(response) {
+        $scope.resources = response.data;
+    });
+});
 
 var headers = function(cookies) {
     return {headers: {'X-AUTH-TOKEN': cookies.get('X-AUTH-TOKEN')}};

@@ -72,6 +72,20 @@ public class RestApiController {
         return categoriesToJson(categories).toString();
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/categories/{id}")
+    public String category(@RequestHeader(AUTH_HEADER_NAME) String token, @PathVariable("id") Integer id) {
+        User user = userRepo.findByToken(token);
+        Category category = categoryRepo.findByIdAndUser(id, user);
+        return categoryToJson(category).toString();
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/categories/{id}/resources")
+    public String resourcesInCategory(@RequestHeader(AUTH_HEADER_NAME) String token, @PathVariable("id") Integer id) {
+        User user = userRepo.findByToken(token);
+        List<Resource> resources = resourceRepo.findAllByCategoryIdAndUser(id, user);
+        return resourcesToJson(resources).toString();
+    }
+
     private JSONArray resourcesToJson(List<Resource> resources) {
         JSONArray result = new JSONArray();
         resources.forEach(resource -> result.put(resourceToJson(resource)));
