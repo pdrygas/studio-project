@@ -98,6 +98,7 @@ public class RestApiController {
             object.put("id", resource.getId());
             object.put("title", resource.getTitle());
             object.put("content", resource.getContent());
+            object.put("category", resource.getCategory().getTitle());
         } catch (JSONException e) {
             e.printStackTrace();
         }

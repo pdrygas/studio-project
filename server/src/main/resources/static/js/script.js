@@ -9,13 +9,34 @@ app.controller('ResourcesController', function($scope, $http, $cookies) {
         });
     };
 
+    $scope.filtered = {};
+    $scope.filterCategories = function() {
+        return function(resource) {
+            return $scope.filtered[resource.category];
+        }
+    };
+
     var getResources = function() {
         $http.get('/api/resources', headers($cookies)).then(function(response) {
             $scope.resources = response.data;
         });
     };
 
+    var getCategories = function() {
+        $http.get('/api/categories', headers($cookies)).then(function(response) {
+            $scope.categories = response.data;
+            showAllCategories();
+        });
+    };
+
+    var showAllCategories = function() {
+        $scope.categories.forEach(function(category) {
+            $scope.filtered[category.title] = true;
+        });
+    };
+
     getResources();
+    getCategories();
 });
 
 app.controller('LoginController', function($scope, $http, $cookies, $window) {
