@@ -43,7 +43,7 @@ public class RestApiController {
     public String addResource(@RequestHeader(AUTH_HEADER_NAME) String token, HttpServletRequest request) {
         User user = userRepo.findByToken(token);
 
-        if(saveResource(user, request.getParameter("title"), request.getParameter("content"))) {
+        if(saveResource(user, request.getParameter("title"), request.getParameter("content"), request.getParameter("category"))) {
             return "{\"result\": \"ok\"}";
         }
         return "{\"result\": \"error\"}";
@@ -98,18 +98,23 @@ public class RestApiController {
             object.put("id", resource.getId());
             object.put("title", resource.getTitle());
             object.put("content", resource.getContent());
-            object.put("category", resource.getCategory().getTitle());
+            if(resource.getCategory() != null) {
+                object.put("category", resource.getCategory().getTitle());
+            } else {
+                object.put("category", null);
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return object;
     }
 
-    private boolean saveResource(User user, String title, String content) {
+    private boolean saveResource(User user, String title, String content, String categoryName) {
         Resource resource = new Resource();
         resource.setUser(user);
         resource.setTitle(title);
         resource.setContent(content);
+        resource.setCategory(categoryRepo.findByTitleAndUser(categoryName, user));
 
         try {
             resourceRepo.save(resource);

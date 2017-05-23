@@ -12,6 +12,9 @@ app.controller('ResourcesController', function($scope, $http, $cookies) {
     $scope.filtered = {};
     $scope.filterCategories = function() {
         return function(resource) {
+            if(resource.category == null) {
+                return true;
+            }
             return $scope.filtered[resource.category];
         }
     };
