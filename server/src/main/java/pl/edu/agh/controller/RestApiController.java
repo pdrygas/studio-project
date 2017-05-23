@@ -72,6 +72,16 @@ public class RestApiController {
         return categoriesToJson(categories).toString();
     }
 
+    @RequestMapping(method = RequestMethod.POST, value = "/categories")
+    public String addCategory(@RequestHeader(AUTH_HEADER_NAME) String token, HttpServletRequest request) {
+        User user = userRepo.findByToken(token);
+
+        if(saveCategory(user, request.getParameter("title"))) {
+            return "{\"result\": \"ok\"}";
+        }
+        return "{\"result\": \"error\"}";
+    }
+
     @RequestMapping(method = RequestMethod.GET, value = "/categories/{id}")
     public String category(@RequestHeader(AUTH_HEADER_NAME) String token, @PathVariable("id") Integer id) {
         User user = userRepo.findByToken(token);
@@ -118,6 +128,19 @@ public class RestApiController {
 
         try {
             resourceRepo.save(resource);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean saveCategory(User user, String title) {
+        Category category = new Category();
+        category.setUser(user);
+        category.setTitle(title);
+
+        try {
+            categoryRepo.save(category);
         } catch (Exception e) {
             return false;
         }
