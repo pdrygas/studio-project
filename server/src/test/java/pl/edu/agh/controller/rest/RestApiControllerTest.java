@@ -1,4 +1,4 @@
-package pl.edu.agh.controller;
+package pl.edu.agh.controller.rest;
 
 import org.json.JSONObject;
 import org.junit.Assert;
@@ -15,7 +15,7 @@ import pl.edu.agh.Application;
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class RestApiControllerTest extends TestsUtils {
+public class RestApiControllerTest extends TestUtils {
     @Test
     public void missingTokenCauses500Error() throws Exception {
         JSONObject result = new JSONObject(request("/api/test", HttpMethod.POST, null));

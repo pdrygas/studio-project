@@ -1,4 +1,4 @@
-package pl.edu.agh.controller;
+package pl.edu.agh.controller.rest;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -16,7 +16,7 @@ import pl.edu.agh.Application;
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class ResourcesControllerTest extends TestsUtils {
+public class ResourcesControllerTest extends TestUtils {
     @Test
     public void defaultUserHas2Resources() throws Exception {
         JSONArray result = new JSONArray(request("/api/resources", HttpMethod.GET, requestEntity(null, USER_TOKEN)));
@@ -37,7 +37,7 @@ public class ResourcesControllerTest extends TestsUtils {
     }
 
     @Test
-    public void addNewResourceWithEmptyContent() throws Exception {
+    public void addNewResourceWithEmptyContentFails() throws Exception {
         JSONObject result = new JSONObject(request("/api/resources", HttpMethod.POST,
                 requestEntity(resourceParams("some title", ""), USER3_TOKEN)));
         Assert.assertEquals("error", result.get("result"));

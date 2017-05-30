@@ -1,4 +1,4 @@
-package pl.edu.agh.controller;
+package pl.edu.agh.controller.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -8,7 +8,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
-public class TestsUtils {
+public class TestUtils {
     @Autowired
     private TestRestTemplate restTemplate;
     protected final String USER_TOKEN = "secret_token";
@@ -20,9 +20,14 @@ public class TestsUtils {
     }
 
     protected MultiValueMap<String, String> resourceParams(String title, String content) {
+        MultiValueMap<String, String> params = categoryParams(title);
+        params.add("content", content);
+        return params;
+    }
+
+    protected MultiValueMap<String, String> categoryParams(String title) {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("title", title);
-        params.add("content", content);
         return params;
     }
 
