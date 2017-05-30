@@ -36,4 +36,9 @@ public class PagesController {
     public String category(@PathVariable Integer id) {
         return "category";
     }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/images")
+    public String images() {
+        return "images";
+    }
 }

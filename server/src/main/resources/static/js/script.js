@@ -121,6 +121,12 @@ app.controller('CategoryController', function($scope, $http, $cookies, $location
     });
 });
 
+app.controller('ImagesController', function($scope, $http, $cookies) {
+    $http.get('/api/images', headers($cookies)).then(function(response) {
+        console.log(response.data);
+    });
+});
+
 var headers = function(cookies) {
     return {headers: {'X-AUTH-TOKEN': cookies.get('X-AUTH-TOKEN')}};
 };
