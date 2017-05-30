@@ -8,9 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
-public class ResourcesController extends RestApiController {
+public class ResourceController extends RestApiController {
 
-    @RequestMapping(method = RequestMethod.GET, value = "/resources", produces = "application/json")
+    @RequestMapping(method = RequestMethod.GET, value = "/resources")
     public @ResponseBody
     String getResources(@RequestHeader(AUTH_HEADER_NAME) String token) {
         User user = userRepo.findByToken(token);

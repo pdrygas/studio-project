@@ -69,6 +69,24 @@ app.controller('LoginController', function($scope, $http, $cookies, $window) {
     angular.element('#login-error').hide();
 });
 
+app.controller('RegisterController', function($scope, $http, $cookies, $window) {
+    $scope.register = function() {
+        $http({
+            method: 'POST',
+            url: '/api/register',
+            data: $.param({username: angular.element('#username').val(), password: angular.element('#password').val()}),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        }).then(function(response) {
+            if(response.data.result === 'ok') {
+                $window.location.href = '/';
+            } else {
+                angular.element('#register-error').show();
+            }
+        });
+    };
+    angular.element('#register-error').hide();
+});
+
 app.controller('ResourceController', function($scope, $http, $cookies, $location) {
     var id = parseInt($location.absUrl().split('/').pop());
     $http.get('/api/resources/' + id, headers($cookies)).then(function(response) {

@@ -2,8 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" data-ng-app="app">
     <head th:include="fragments/head :: head"></head>
     <body>
-        <div data-ng-controller="LoginController" class="container">
-            Don't have an account? <a href="/register">Register here!</a><br />
+        <div data-ng-controller="RegisterController" class="container">
             <form>
                 <div class="form-group">
                     <input type="text" class="form-control" id="username" placeholder="Username" />
@@ -11,10 +10,10 @@
                 <div class="form-group">
                     <input type="password" class="form-control" id="password" placeholder="Password" />
                 </div>
-                <div id="login-error" class="form-group has-error">
-                    <span class="help-block">Wrong username/password!</span>
+                <div id="register-error" class="form-group has-error">
+                    <span class="help-block">Registration failed!</span>
                 </div>
-                <button type="button" class="btn btn-default" ng-click="login()">Login</button>
+                <button type="button" class="btn btn-default" ng-click="register()">Register</button>
             </form>
         </div>
     </body>

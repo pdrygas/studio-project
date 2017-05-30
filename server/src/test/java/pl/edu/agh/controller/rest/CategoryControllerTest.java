@@ -17,7 +17,7 @@ import pl.edu.agh.Application;
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class CategoriesControllerTest extends TestUtils {
+public class CategoryControllerTest extends TestUtils {
     @Test
     public void addCategoryWithEmptyTitleFails() throws Exception {
         JSONObject result = new JSONObject(request("/api/categories", HttpMethod.POST,

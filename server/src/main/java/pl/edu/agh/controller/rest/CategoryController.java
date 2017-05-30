@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
-public class CategoriesController extends RestApiController {
+public class CategoryController extends RestApiController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/categories")
     public String getCategories(@RequestHeader(AUTH_HEADER_NAME) String token) {

@@ -22,6 +22,11 @@ public class PagesController {
         return "index";
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/register")
+    public String register() {
+        return "register";
+    }
+
     @RequestMapping(method = RequestMethod.GET, value = "/categories")
     public String categories() {
         return "categories";
