@@ -1,9 +1,10 @@
 jQuery(document).ready(function ($) {
     var port = chrome.extension.connect({
-        name: "Background Page commmunication"
+        name: "Background Page communication"
     });
 
     port.postMessage({command: "isTokenSet"});
+
     port.onMessage.addListener(function(msg) {
     	if (msg.command == "tokenState")
     		if (msg.state == "SET") {
@@ -26,7 +27,7 @@ jQuery(document).ready(function ($) {
 			$('#loginform').hide();
 			$('#loggedIn').show();
 		}).fail(function(jqXHR, textStatus, errorThrown) {
-			$('#debug').text('zle passy');
+			$('#debug').text('Invalid credentials');
 		});
 	});
 });

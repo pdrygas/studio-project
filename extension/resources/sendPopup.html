@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Send menu</title>
+    <link rel="stylesheet" href="popupStyle.css">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Overpass">
+    <script type="text/javascript" src="../lib/jquery.min.js"></script>
+    <script type="text/javascript" src="../lib/jquery.cookie.js"></script>
+    <script src="sendScript.js"></script>
+</head>
+<body>
+    <div id="content">
+        <form id="createNewCategory">
+            New category <input id="newCategoryName" type="text" name="categoryName">
+            <input type="submit" value="Create">
+        </form>
+        <form id="sendNewContentWithCategory">
+            <label for="dropdownCategories">Select current category</label>
+            <select id="dropdownCategories">
+            </select><br>
+            Content title <input id="contentTitle" type="text" name="contentTitle">
+            <input style="width: 62px" type="submit" value="Send">
+        </form>
+    </div>
+</body>
+</html>
