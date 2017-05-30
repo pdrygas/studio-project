@@ -31,7 +31,6 @@ public class Resource {
     @Expose
     private Category category;
 
-
     public int getId() {
         return id;
     }

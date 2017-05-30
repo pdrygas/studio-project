@@ -10,7 +10,7 @@ import org.springframework.util.MultiValueMap;
 
 public class TestUtils {
     @Autowired
-    private TestRestTemplate restTemplate;
+    protected TestRestTemplate restTemplate;
     protected final String USER_TOKEN = "secret_token";
     protected final String USER2_TOKEN = "other_token";
     protected final String USER3_TOKEN = "other2_token";
