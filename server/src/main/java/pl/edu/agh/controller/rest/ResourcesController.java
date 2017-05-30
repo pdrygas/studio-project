@@ -15,8 +15,7 @@ public class ResourcesController extends RestApiController {
     String getResources(@RequestHeader(AUTH_HEADER_NAME) String token) {
         User user = userRepo.findByToken(token);
         List<Resource> resources = resourceRepo.findAllByUserId(user.getId());
-
-        return resourcesToJson(resources).toString();
+        return gson.toJson(resources);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/resources")
@@ -35,7 +34,7 @@ public class ResourcesController extends RestApiController {
     public String resource(@RequestHeader(AUTH_HEADER_NAME) String token, @PathVariable("id") Integer id) {
         User user = userRepo.findByToken(token);
         Resource resource = resourceRepo.findByIdAndUser(id, user);
-        return resourceToJson(resource).toString();
+        return gson.toJson(resource);
     }
 
     private boolean saveResource(User user, String title, String content, String categoryName) {

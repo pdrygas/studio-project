@@ -1,5 +1,6 @@
 package pl.edu.agh.model;
 
+import com.google.gson.annotations.Expose;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -12,18 +13,22 @@ import javax.validation.constraints.Size;
 public class Resource {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Expose
     private int id;
     @ManyToOne
     @JoinColumn(name = "user_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
+    @Expose
     private String title;
     @NotNull
     @Size(min = 1)
+    @Expose
     private String content;
     @ManyToOne
     @JoinColumn(name = "category_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @Expose
     private Category category;
 
 

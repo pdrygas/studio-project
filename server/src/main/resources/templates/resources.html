@@ -29,7 +29,7 @@
                             {{ resource.content.substr(0, 20) }}...
                         </a>
                     </td>
-                    <td>{{ resource.category }}</td>
+                    <td>{{ resource.category.title }}</td>
                     <td>
                         <button ng-click="deleteResource(resource.id, $index)" class="btn btn-default">
                             <span class="glyphicon glyphicon-remove"></span>

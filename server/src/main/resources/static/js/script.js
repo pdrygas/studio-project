@@ -15,7 +15,7 @@ app.controller('ResourcesController', function($scope, $http, $cookies) {
             if(resource.category == null) {
                 return true;
             }
-            return $scope.filtered[resource.category];
+            return $scope.filtered[resource.category.title];
         }
     };
 

@@ -1,5 +1,6 @@
 package pl.edu.agh.model;
 
+import com.google.gson.annotations.Expose;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -12,6 +13,7 @@ import javax.validation.constraints.Size;
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Expose
     private int id;
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -19,6 +21,7 @@ public class Category {
     private User user;
     @NotNull
     @Size(min = 1)
+    @Expose
     private String title;
 
     public int getId() {

@@ -1,8 +1,5 @@
 package pl.edu.agh.controller.rest;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.agh.model.Category;
 import pl.edu.agh.model.Resource;
@@ -18,7 +15,7 @@ public class CategoriesController extends RestApiController {
     public String getCategories(@RequestHeader(AUTH_HEADER_NAME) String token) {
         User user = userRepo.findByToken(token);
         List<Category> categories = categoryRepo.findByUser(user);
-        return categoriesToJson(categories).toString();
+        return gson.toJson(categories);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/categories")
@@ -31,14 +28,14 @@ public class CategoriesController extends RestApiController {
     public String category(@RequestHeader(AUTH_HEADER_NAME) String token, @PathVariable("id") Integer id) {
         User user = userRepo.findByToken(token);
         Category category = categoryRepo.findByIdAndUser(id, user);
-        return categoryToJson(category).toString();
+        return gson.toJson(category);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/categories/{id}/resources")
     public String resourcesInCategory(@RequestHeader(AUTH_HEADER_NAME) String token, @PathVariable("id") Integer id) {
         User user = userRepo.findByToken(token);
         List<Resource> resources = resourceRepo.findAllByCategoryIdAndUser(id, user);
-        return resourcesToJson(resources).toString();
+        return gson.toJson(resources);
     }
 
     private boolean saveCategory(User user, String title) {
@@ -47,23 +44,6 @@ public class CategoriesController extends RestApiController {
         category.setTitle(title);
 
         return saveEntity(categoryRepo, category);
-    }
-
-    private JSONArray categoriesToJson(List<Category> categories) {
-        JSONArray result = new JSONArray();
-        categories.forEach(category -> result.put(categoryToJson(category)));
-        return result;
-    }
-
-    private JSONObject categoryToJson(Category category) {
-        JSONObject object = new JSONObject();
-        try {
-            object.put("id", category.getId());
-            object.put("title", category.getTitle());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return object;
     }
 
 }

@@ -16,7 +16,7 @@ import pl.edu.agh.Application;
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class ResourcesControllerTests extends TestsUtils {
+public class ResourcesControllerTest extends TestsUtils {
     @Test
     public void defaultUserHas2Resources() throws Exception {
         JSONArray result = new JSONArray(request("/api/resources", HttpMethod.GET, requestEntity(null, USER_TOKEN)));
