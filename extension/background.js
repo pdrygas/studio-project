@@ -2,15 +2,23 @@ var authToken = null;
 
 chrome.contextMenus.create({
     title: "QuickSend",
-    contexts:["selection","image"],
+    contexts:["selection"],
     onclick: function() {
         triggerContentTransport();
     }
 });
 
 chrome.contextMenus.create({
+    title: "SendImage",
+    contexts:["image"],
+    onclick: function () {
+        sendImage();
+    }
+})
+
+chrome.contextMenus.create({
     title: "Send",
-    contexts: ["selection","image"],
+    contexts: ["selection"],
     onclick: function() {
         popupwindow('resources/sendPopup.html','Menu',400,200);
     }
@@ -57,5 +65,14 @@ function triggerCategorizedContentTransport(title, category) {
             token: authToken,
             title: title,
             category: category,});
+    });
+}
+
+function sendImage() {
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        chrome.tabs.sendMessage(tabs[0].id, {
+            command: "sendImage",
+            token: authToken,
+        });
     });
 }
