@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS categories CASCADE;
 DROP TABLE IF EXISTS resources CASCADE;
+DROP TABLE IF EXISTS images CASCADE;
 
 BEGIN;
 
@@ -22,6 +23,11 @@ CREATE TABLE resources(
   title VARCHAR(40),
   content TEXT NOT NULL,
   category_id INTEGER REFERENCES categories(id)
+);
+CREATE TABLE images(
+  id SERIAL PRIMARY KEY,
+  url TEXT NOT NULL,
+  user_id INTEGER NOT NULL REFERENCES users(id)
 );
 
 COMMIT;
