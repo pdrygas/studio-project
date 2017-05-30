@@ -123,7 +123,15 @@ app.controller('CategoryController', function($scope, $http, $cookies, $location
 
 app.controller('ImagesController', function($scope, $http, $cookies) {
     $http.get('/api/images', headers($cookies)).then(function(response) {
-        console.log(response.data);
+        $scope.images = response.data;
+        var $grid = $('.grid').masonry({
+            itemSelector: '.grid-item',
+            percentPosition: true,
+            columnWidth: '.grid-sizer'
+        });
+        $grid.imagesLoaded().progress(function() {
+            $grid.masonry();
+        });
     });
 });
 
