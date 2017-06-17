@@ -1,0 +1,27 @@
+{
+  "manifest_version": 2,
+  "name": "Content collector",
+  "description": "TODO",
+  "version": "1.0",
+  "browser_action": {
+    "default_icon": "resources/icon.png",
+    "default_popup": "login.html"
+  },
+  "permissions": [
+    "contextMenus",
+    "tabs",
+    "cookies",
+    "http://localhost:8080/*"
+  ],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "run_at": "document_end",
+      "js": ["lib/jquery.min.js","lib/jquery.cookie.js","content.js"]
+    }
+  ]
+}

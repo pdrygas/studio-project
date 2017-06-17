@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" data-ng-app="app">
+    <head th:include="fragments/head :: head"></head>
+    <body>
+        <div data-ng-controller="NavbarController" class="container" th:include="fragments/header :: header"></div>
+        <div data-ng-controller="ResourcesController" class="container">
+            <table class="table table-striped">
+                <tr>
+                    <th colspan="3">
+                        <button class="btn btn-default" ng-click="displayGroupsFilter = !displayGroupsFilter"><span class="glyphicon glyphicon-filter"></span></button>
+                        <div ng-show="displayGroupsFilter">
+                            <table>
+                                <tr ng-repeat="category in categories">
+                                    <td>
+                                        <label class="form-check-label">
+                                            <input ng-model="filtered[category.title]" type="checkbox" class="form-check-input" />
+                                            {{ category.title }}
+                                        </label>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </th>
+                </tr>
+                <tr ng-repeat="resource in resources | filter:filterCategories()">
+                    <td>
+                        <a href="/resources/{{ resource.id }}">
+                            <b>{{ resource.title }}</b><br />
+                            {{ resource.content.substr(0, 20) }}...
+                        </a>
+                    </td>
+                    <td>{{ resource.category.title }}</td>
+                    <td>
+                        <button ng-click="deleteResource(resource.id, $index)" class="btn btn-default">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>

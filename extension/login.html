@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+<head>
+    <title>Login page for browser extension</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Overpass">
+    <script type="text/javascript" src="lib/jquery.min.js"></script>
+    <script type="text/javascript" src="lib/jquery.cookie.js"></script>
+    <script src="script.js"></script>
+</head>
+<body>
+    <p hidden id="loggedIn">Logged in</p>
+    <form id="loginform" name="loginform">
+		<label for="username">Username: </label><input id="username" name="username"><br/>
+		<label for="password">Password : </label><input id="password" name="password"><br/>
+		<button type="submit">Login!</button>
+	</form>
+    <p id="debug"></p>
+</body>
+</html>
+

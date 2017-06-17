@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" data-ng-app="app">
+    <head th:include="fragments/head :: head"></head>
+    <body>
+        <div data-ng-controller="RegisterController" class="container">
+            <form>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="username" placeholder="Username" />
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" id="password" placeholder="Password" />
+                </div>
+                <div id="register-error" class="form-group has-error">
+                    <span class="help-block">Registration failed!</span>
+                </div>
+                <button type="button" class="btn btn-default" ng-click="register()">Register</button>
+            </form>
+        </div>
+    </body>
+</html>

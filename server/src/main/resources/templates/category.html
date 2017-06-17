@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" data-ng-app="app">
+    <head th:include="fragments/head :: head"></head>
+    <body>
+        <div data-ng-controller="NavbarController" class="container" th:include="fragments/header :: header"></div>
+        <div data-ng-controller="CategoryController" class="container">
+            <h3>Category: {{ category.title }}</h3>
+            <table class="table table-striped">
+                <tr ng-repeat="resource in resources">
+                    <td>
+                        <a href="/resources/{{ resource.id }}">
+                            <b>{{ resource.title }}</b><br />
+                            {{ resource.content.substr(0, 20) }}...
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>
